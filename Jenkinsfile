@@ -1,8 +1,14 @@
 node {
+   // Set up tools
    def mvnHome = tool 'M3'
+   def jdkHome = tool name: 'jdk1.8.0_202', type: 'hudson.model.JDK'
 
+   // Set JAVA_HOME environment variable
+   env.JAVA_HOME = jdkHome
+   env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+   
    stage('Checkout Code') { 
-      git 'https://github.com/maping/java-maven-calculator-web-app.git'
+      git 'https://github.com/rickytang681/SCC-AssignmentII-java-maven-calculator-web-app.git'
    }
    stage('JUnit Test') {
       if (isUnix()) {
@@ -39,21 +45,5 @@ node {
            input message: 'Deploy this web app to production ?'
       }
       echo 'Deploy...'
-   }
-}
-   
-   post {
-      always {
-         echo 'Cleaning up workspace'
-         deleteDir() // Clean up the workspace after the build
-      }   
-      success {
-         echo 'Build succeeded!!!'
-         // You could add notification steps here
-      }
-      failure {
-         echo 'Build failed!'
-         // You could add notification steps here
-      }
    }
 }
