@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-      -Ricky-branch
+      - Ricky-branch
   pull_request:
     branches:
       - master
-      -Ricky-branch
+      - Ricky-branch
 
 jobs:
   build:
