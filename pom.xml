@@ -6,7 +6,7 @@
     <packaging>war</packaging>
     <version>1.1-SNAPSHOT</version>
     <name>Calculator </name>
-    <description>A Calculator Web Application Writen By Java, Built By Maven, CI/CD By Jenkins, deploy By docker</description>
+    <description>A Calculator Web Application Writen By Java, Built By Maven, CI/CD By Jenkin, deploy By docker</description>
     <url>http://maven.apache.org</url>
 
     <properties>
