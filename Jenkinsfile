@@ -42,3 +42,18 @@ node {
    }
 }
    
+   post {
+      always {
+         echo 'Cleaning up workspace'
+         deleteDir() // Clean up the workspace after the build
+      }   
+      success {
+         echo 'Build succeeded!!!'
+         // You could add notification steps here
+      }
+      failure {
+         echo 'Build failed!'
+         // You could add notification steps here
+      }
+   }
+}
