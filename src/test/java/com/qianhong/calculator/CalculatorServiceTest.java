@@ -16,20 +16,24 @@ public class CalculatorServiceTest {
     @Test
     public void testAdd() {
         assertEquals(34, new CalculatorService().Add(8, 26).getResult());
+        assertEquals(35, new CalculatorService().Add(9, 26).getResult());
     }
 
     @Test
     public void testSub() {
         assertEquals(4, new CalculatorService().Sub(12, 8).getResult());
+        assertEquals(5, new CalculatorService().Sub(12, 9).getResult());
     }
 
     @Test
     public void testMul() {
         assertEquals(88, new CalculatorService().Mul(11, 8).getResult());
+        assertEquals(99, new CalculatorService().Mul(11, 9).getResult());
     }
 
     @Test
     public void testDiv() {
         assertEquals(1, new CalculatorService().Div(12, 12).getResult());
+        assertEquals(1, new CalculatorService().Div(11, 11).getResult());
     }
 }
