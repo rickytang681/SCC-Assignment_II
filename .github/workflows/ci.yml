@@ -1,0 +1,84 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        run: mvn clean package -Dmaven.test.skip=true
+
+      - name: Run unit tests
+        run: mvn test
+
+      - name: Run integration tests
+        run: mvn integration-test
+
+      - name: Package the application
+        run: mvn package
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+
+      - name: Deploy to Tomcat
+        run: |
+          cp target/calculator.war $CATALINA_HOME/webapps/ROOT.war
+          $CATALINA_HOME/bin/shutdown.sh
+          $CATALINA_HOME/bin/startup.sh
+
+      - name: Build Docker image
+        run: docker build -t calculator .
+
+      - name: Docker login
+	run: echo "698321Rtrh" | docker login -u rickyt0681 --password-stdin
+
+      - name: Docker push
+        run: docker push ${{ rickyt0681 }}/calculator
+
+      - name: Trigger Jenkins Job
+        run: |
+          curl -X POST "http://http://localhost:8070/job/MyJavaMavenCalculateWebApp-Pipeline//buildWithParameters?token=11d6eae69cbb8aa51800404a067af1667c"
+
+  post-deploy:
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+      - name: Notify deployment
+        run: echo "Deployment completed for commit ${{ github.sha }}"
