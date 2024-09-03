@@ -59,7 +59,7 @@ jobs:
           name: code-coverage-report
           path: target/site/cobertura/
 
-      - name: Upload Test Reports
+      - name: Upload Test Report
         uses: actions/upload-artifact@v3
         with:
           name: surefire-report
