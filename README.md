@@ -85,7 +85,7 @@ $ mvn clean integration-test
 [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
 ```
 ### 1.6 Deploy Your Web App to An Existed Tomcat 8x
-Please install a Tomcat 8x on your machine, after that, you need change pom.xml, point to your own Tomcat 8x.
+Please install a Tomcat8x on your machine, after that, you need change pom.xml, point to your own Tomcat 8x.
 ```console
 $ mvn cargo:run
 [INFO] [talledLocalContainer] 14-Mar-2019 10:10:19.495 信息 [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
@@ -173,35 +173,6 @@ Visit http://localhost:8081/ with admin/admin123.
 Search calculator, click Browse SNAPSHOT(s)
 
 ![image](nexus-browse-01.png)
-
-### 1.11 Release X.0 version (Optional)
-Before Release a version, you must commit and push all your code to remote repo.
-```console
-$ mvn release:prepare
-...
-[INFO] --- maven-release-plugin:2.5.3:prepare (default-cli) @ java-maven-calculator-web-app ---
-[INFO] Resuming release from phase 'scm-check-modifications'
-[INFO] Verifying that there are no local modifications...
-[INFO]   ignoring changes on: **/pom.xml.releaseBackup, **/pom.xml.next, **/pom.xml.tag, **/pom.xml.branch, **/release.properties, **/pom.xml.backup
-[INFO] Executing: /bin/sh -c cd /Users/maping/code/java-maven-calculator-web-app && git rev-parse --show-toplevel
-[INFO] Working directory: /Users/maping/code/java-maven-calculator-web-app
-[INFO] Executing: /bin/sh -c cd /Users/maping/code/java-maven-calculator-web-app && git status --porcelain .
-[INFO] Working directory: /Users/maping/code/java-maven-calculator-web-app
-[INFO] Checking dependencies and plugins for snapshots ...
-What is the release version for "Calculator Web"? (com.qianhong.javawebapp:java-maven-calculator-web-app) 1.0: : 
-What is SCM release tag or label for "Calculator Web"? (com.qianhong.javawebapp:java-maven-calculator-web-app) java-maven-calculator-web-app-1.0: : 
-What is the new development version for "Calculator Web"? (com.qianhong.javawebapp:java-maven-calculator-web-app) 1.1-SNAPSHOT: : 
-[INFO] Transforming 'Calculator Web'...
-[INFO] Not generating release POMs
-...
-```
-Now, release java-maven-calculator-web-app 1.0 to your Nexus. 
-```console
-$ mvn release:perform
-...
-[INFO] Uploaded to releases: http://localhost:8081/repository/maven-releases/com/qianhong/javawebapp/java-maven-calculator-web-app/1.0/java-maven-calculator-web-app-1.0-javadoc.jar (30 kB at 722 kB/s)
-...
-```
 
 ## 2. Automaticly Build, Test, and Deploy By Jenkins
 
